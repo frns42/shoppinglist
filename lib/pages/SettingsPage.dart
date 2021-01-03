@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.deepOrange,
-        title: Text(
-          'Settings',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      backgroundColor: Colors.deepOrange,
       body: Column(
         children: [
           personalDataTextBox,
@@ -31,10 +23,10 @@ Widget personalDataTextBox = Container(
       TextField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: BorderSide(color: Colors.deepOrange),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             prefixIcon: Icon(Icons.person),
             filled: true,
@@ -48,10 +40,10 @@ Widget personalDataTextBox = Container(
       TextField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: BorderSide(color: Colors.blue),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             prefixIcon: Icon(Icons.add),
             filled: true,
@@ -65,10 +57,10 @@ Widget personalDataTextBox = Container(
       TextField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
+                borderSide: BorderSide(color: Colors.transparent),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: BorderSide(color: Colors.blue),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             prefixIcon: Icon(Icons.mail),
             filled: true,
