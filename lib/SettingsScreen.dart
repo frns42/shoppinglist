@@ -1,31 +1,29 @@
 import 'package:flutter/material.dart';
 
-class InitialScreen extends StatelessWidget {
+class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepOrange,
-      body: Container(
-        padding: EdgeInsets.only(top: 170.0),
-        child: Column(
-          children: [
-            welcomeText,
-            textBox,
-            InitialButtons(),
-          ],
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.deepOrange,
+        title: Text(
+          'Settings',
+          style: TextStyle(color: Colors.black),
         ),
+      ),
+      body: Column(
+        children: [
+          personalDataTextBox,
+          SettingsButtons(),
+        ],
       ),
     );
   }
 }
 
-Widget welcomeText = Container(
-  child: Text('Welcome to Shopping List!',
-      style: TextStyle(
-          fontWeight: FontWeight.bold, fontSize: 27.0, color: Colors.white)),
-);
-
-Widget textBox = Container(
+Widget personalDataTextBox = Container(
   padding: const EdgeInsets.all(32.0),
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,13 +31,12 @@ Widget textBox = Container(
       TextField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            prefixIcon: Icon(Icons.mail),
-            hintText: 'Enter e-mail here',
+            prefixIcon: Icon(Icons.person),
             filled: true,
             fillColor: Colors.white),
       ),
@@ -51,13 +48,29 @@ Widget textBox = Container(
       TextField(
         decoration: InputDecoration(
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
+                borderSide: BorderSide(color: Colors.grey),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
             focusedBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.white),
                 borderRadius: BorderRadius.all(Radius.circular(30))),
-            prefixIcon: Icon(Icons.lock),
-            hintText: 'Enter password here',
+            prefixIcon: Icon(Icons.add),
+            filled: true,
+            fillColor: Colors.white),
+      ),
+      Container(
+        child: Text(
+          '',
+        ),
+      ),
+      TextField(
+        decoration: InputDecoration(
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey),
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.all(Radius.circular(30))),
+            prefixIcon: Icon(Icons.mail),
             filled: true,
             fillColor: Colors.white),
       ),
@@ -65,7 +78,7 @@ Widget textBox = Container(
   ),
 );
 
-class InitialButtons extends StatelessWidget {
+class SettingsButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,13 +92,13 @@ class InitialButtons extends StatelessWidget {
                 primary: Colors.white,
                 onPrimary: Colors.black,
                 textStyle:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
-              Navigator.pushNamed(context, '/home');
+              //save information
             },
-            child: Text('Login'),
+            child: Text('Save'),
           ),
         ),
         Container(
@@ -96,13 +109,13 @@ class InitialButtons extends StatelessWidget {
                 primary: Colors.white,
                 onPrimary: Colors.black,
                 textStyle:
-                    TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
-              Navigator.pushNamed(context, '/sign-up');
+              //Cancel changes
             },
-            child: Text('Sign up'),
+            child: Text('Cancel'),
           ),
         ),
       ],
