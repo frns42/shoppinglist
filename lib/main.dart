@@ -13,8 +13,8 @@ class ShoppingList extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => InitialScreen(),
-        '/home': (context) => HomeScreen(),
         '/sign-up': (context) => SignUpScreen(),
+        '/home': (context) => HomeScreen(),
       },
     );
   }
