@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "225249194867",
+    "project_id": "harsbackproductions",
+    "storage_bucket": "harsbackproductions.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225249194867:android:baa7c0303dad899f880b06",
+        "android_client_info": {
+          "package_name": "com.harsbackproductions.firebasetest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225249194867-igkpmko4s0qqfqes7hc894ajle5macg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ0VOyGpu0IrUIXRws0XEeUeJ7SOGzHWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225249194867-igkpmko4s0qqfqes7hc894ajle5macg7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225249194867-sdkh04k94r9ctioismheg95b14friojb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.harsbackproductions.firebasetest"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225249194867:android:4507e3ca9bf408c3880b06",
+        "android_client_info": {
+          "package_name": "com.harsbackproductions.shoppinglist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225249194867-igkpmko4s0qqfqes7hc894ajle5macg7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDZ0VOyGpu0IrUIXRws0XEeUeJ7SOGzHWM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225249194867-igkpmko4s0qqfqes7hc894ajle5macg7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "225249194867-sdkh04k94r9ctioismheg95b14friojb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.harsbackproductions.firebasetest"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

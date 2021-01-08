@@ -22,6 +22,11 @@ environment:
 
 dependencies:
   curved_navigation_bar: ^0.3.7
+  cloud_firestore: ^0.14.0+2  # new
+  firebase_auth: ^0.18.0+1    # new
+  google_fonts: ^1.1.0
+  provider: ^4.3.2+2
+
   flutter:
     sdk: flutter
 
