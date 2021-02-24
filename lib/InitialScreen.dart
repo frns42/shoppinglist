@@ -10,7 +10,7 @@ class InitialScreen extends StatelessWidget {
         child: Column(
           children: [
             welcomeText,
-            textBox,
+            emailTextBox,
             InitialButtons(),
           ],
         ),
@@ -25,7 +25,7 @@ Widget welcomeText = Container(
           fontWeight: FontWeight.bold, fontSize: 27.0, color: Colors.white)),
 );
 
-Widget textBox = Container(
+Widget emailTextBox = Container(
   padding: const EdgeInsets.all(32.0),
   child: Column(
     crossAxisAlignment: CrossAxisAlignment.start,
