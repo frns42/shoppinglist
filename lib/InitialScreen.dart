@@ -146,7 +146,7 @@ class InitialButtons extends StatelessWidget {
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
-              appState.signIn(() => Navigator.pushNamed(context, '/sign-up'),
+              appState.signIn(() => Navigator.pushNamed(context, '/home'),
                   (e) => _showErrorDialog(context, 'Could not login', e));
             },
             child: Text('Login'),

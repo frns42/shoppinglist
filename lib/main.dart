@@ -54,7 +54,7 @@ class ApplicationState with ChangeNotifier {
         email: this.email,
         password: this.password,
       );
-      notifyListeners();
+      onSuccess();
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
