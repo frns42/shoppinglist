@@ -18,6 +18,9 @@ void main() {
 
 class ApplicationState with ChangeNotifier {
 
+  String email;
+  String password;
+
   ApplicationState() {
     print('In ApplicationState Constructor!');
     init();
@@ -29,7 +32,7 @@ class ApplicationState with ChangeNotifier {
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
-        print('We have a user: ' + user.email);
+        print('We are logged in and have a user have a user: ' + user.email);
       }
     });
   }
@@ -45,18 +48,23 @@ class ApplicationState with ChangeNotifier {
     }
   }
 
-  void signInWithEmailAndPassword(String email,
-      String password,
-      void Function(FirebaseAuthException e) errorCallback,) async {
+  void signIn(void Function() onSuccess, void Function(FirebaseAuthException e) errorCallback,) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
+        email: this.email,
+        password: this.password,
       );
       notifyListeners();
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
+  }
+
+  void setEmail(String email) {
+    this.email = email;
+  }
+  void setPassword(String password) {
+    this.password = password;
   }
 }
 
