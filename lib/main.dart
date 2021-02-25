@@ -20,11 +20,21 @@ class ApplicationState with ChangeNotifier {
 
   String email;
   String password;
+  String displayName;
+
+  String firstName;
+  String lastName;
+
+  String pwd1ForSignup;
+
+  String pwd2ForSignup;
 
   ApplicationState() {
     print('In ApplicationState Constructor!');
     init();
   }
+
+
 
   Future<void> init() async {
     await Firebase.initializeApp();
@@ -37,22 +47,31 @@ class ApplicationState with ChangeNotifier {
     });
   }
 
-  void registerAccount(String email, String displayName, String password,
-      void Function(FirebaseAuthException e) errorCallback) async {
+  void registerAccount(void Function() onSuccess, void Function(Exception e) errorCallback,) async {
+
+    if (pwd1ForSignup != pwd2ForSignup){
+      print(pwd1ForSignup);
+      print(pwd2ForSignup);
+      errorCallback(new Exception("Passwords not matching"));
+      return;
+    }
+
     try {
       var credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(email: email, password: pwd1ForSignup);
+      displayName = firstName + ' ' + lastName;
+      password = pwd1ForSignup;
       await credential.user.updateProfile(displayName: displayName);
     } on FirebaseAuthException catch (e) {
       errorCallback(e);
     }
   }
 
-  void signIn(void Function() onSuccess, void Function(FirebaseAuthException e) errorCallback,) async {
+  void signIn(void Function() onSuccess, void Function(Exception e) errorCallback,) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: this.email,
-        password: this.password,
+        password: this.pwd1ForSignup,
       );
       onSuccess();
     } on FirebaseAuthException catch (e) {
@@ -63,8 +82,25 @@ class ApplicationState with ChangeNotifier {
   void setEmail(String email) {
     this.email = email;
   }
+
   void setPassword(String password) {
     this.password = password;
+  }
+
+  void setPwdForSignup1(String pwd1) {
+    this.pwd1ForSignup = pwd1;
+  }
+
+  void setPwdForSignup2(String pwd2) {
+    this.pwd2ForSignup = pwd2;
+  }
+
+  void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+  
+  void setLastName(String lastName) {
+    this.lastName = lastName;
   }
 }
 

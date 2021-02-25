@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/main.dart';
+import 'package:shopping_list/helper.dart';
 
 class InitialScreen extends StatelessWidget {
   @override
@@ -94,40 +95,7 @@ class InitialButtons extends StatelessWidget {
 
   InitialButtons(this.appState);
 
-  void _showErrorDialog(BuildContext context, String title, Exception e) {
-    showDialog<void>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(
-            title,
-            style: TextStyle(fontSize: 24),
-          ),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(
-                  '${(e as dynamic).message}',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            StyledButton(
-              child: Text(
-                'OK',
-                style: TextStyle(color: Colors.deepPurple),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +115,7 @@ class InitialButtons extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
               appState.signIn(() => Navigator.pushNamed(context, '/home'),
-                  (e) => _showErrorDialog(context, 'Could not login', e));
+                  (e) => helper.showErrorDialog(context, 'Could not login', e));
             },
             child: Text('Login'),
           ),
@@ -172,19 +140,4 @@ class InitialButtons extends StatelessWidget {
       ],
     );
   }
-}
-
-class StyledButton extends StatelessWidget {
-  const StyledButton({@required this.child, @required this.onPressed});
-
-  final Widget child;
-  final void Function() onPressed;
-
-  @override
-  Widget build(BuildContext context) => OutlinedButton(
-        style: OutlinedButton.styleFrom(
-            side: BorderSide(color: Colors.deepPurple)),
-        onPressed: onPressed,
-        child: child,
-      );
 }
