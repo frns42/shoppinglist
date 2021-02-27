@@ -44,6 +44,7 @@ class ApplicationState with ChangeNotifier {
       if (user != null) {
         print('We are logged in and have a user have a user: ' + user.email);
       }
+
     });
   }
 
