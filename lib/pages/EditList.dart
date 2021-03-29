@@ -1,16 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
-class AddListPage extends StatefulWidget {
+class EditList extends StatefulWidget {
+  DocumentSnapshot docToEdit;
+
+  EditList({this.docToEdit});
+
   @override
-  _AddListPageState createState() => _AddListPageState();
+  _EditListState createState() => _EditListState();
 }
 
-class _AddListPageState extends State<AddListPage> {
+class _EditListState extends State<EditList> {
   TextEditingController title = TextEditingController();
   TextEditingController content = TextEditingController();
 
   CollectionReference ref = FirebaseFirestore.instance.collection('notes');
+
+  @override
+  void initState() {
+    title = TextEditingController(text: widget.docToEdit.data()['title']);
+    content = TextEditingController(text: widget.docToEdit.data()['content']);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,19 +30,29 @@ class _AddListPageState extends State<AddListPage> {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.white,
-        title: Text(
-          'Shopping List',
-          style: TextStyle(color: Colors.black),
-        ),
         actions: [
           FlatButton(
             onPressed: () {
-              ref.add({
+              widget.docToEdit.reference.update({
                 'title': title.text,
                 'content': content.text
               }).whenComplete(() => Navigator.pop(context));
             },
-            child: Text('Save'),
+            child: Text(
+              'Save'.toUpperCase(),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+          ),
+          FlatButton(
+            onPressed: () {
+              widget.docToEdit.reference
+                  .delete()
+                  .whenComplete(() => Navigator.pop(context));
+            },
+            child: Text(
+              'Delete'.toUpperCase(),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
           ),
         ],
       ),
@@ -40,7 +61,6 @@ class _AddListPageState extends State<AddListPage> {
         child: Column(
           children: [
             Container(
-              //decoration: BoxDecoration(border: Border.all()),
               child: TextField(
                 controller: title,
                 decoration: InputDecoration(
@@ -60,7 +80,6 @@ class _AddListPageState extends State<AddListPage> {
             ),
             Expanded(
               child: Container(
-                //decoration: BoxDecoration(border: Border.all()),
                 child: TextField(
                   controller: content,
                   maxLines: null,
@@ -78,9 +97,6 @@ class _AddListPageState extends State<AddListPage> {
                       fillColor: Colors.white),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 10,
             ),
           ],
         ),

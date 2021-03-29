@@ -34,10 +34,17 @@ Widget welcomeText = Container(
           fontWeight: FontWeight.bold, fontSize: 27.0, color: Colors.white)),
 );
 
-class EmailAndPasswordFields extends StatelessWidget {
+class EmailAndPasswordFields extends StatefulWidget {
   ApplicationState appState;
 
   EmailAndPasswordFields(this.appState);
+
+  @override
+  _EmailAndPasswordFieldsState createState() => _EmailAndPasswordFieldsState();
+}
+
+class _EmailAndPasswordFieldsState extends State<EmailAndPasswordFields> {
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -55,11 +62,11 @@ class EmailAndPasswordFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.mail),
-                hintText: 'Enter e-mail here',
+                hintText: 'E-mail',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (emailTextProvidedByUser) {
-              appState.setEmail(emailTextProvidedByUser);
+              widget.appState.setEmail(emailTextProvidedByUser);
             },
           ),
           Container(
@@ -68,6 +75,7 @@ class EmailAndPasswordFields extends StatelessWidget {
             ),
           ),
           TextField(
+            obscureText: _isObscure,
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent),
@@ -76,11 +84,20 @@ class EmailAndPasswordFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.lock),
-                hintText: 'Enter password here',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                ),
+                hintText: 'Password',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (passwordProvidedByUser) {
-              appState.setPassword(passwordProvidedByUser);
+              widget.appState.setPassword(passwordProvidedByUser);
             },
           ),
         ],
@@ -94,8 +111,6 @@ class InitialButtons extends StatelessWidget {
   ApplicationState appState;
 
   InitialButtons(this.appState);
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -4,7 +4,6 @@ import 'package:shopping_list/pages/ListPage.dart';
 import 'package:shopping_list/pages/SettingsPage.dart';
 import 'package:shopping_list/pages/AddListPage.dart';
 
-
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -22,14 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepOrange,
-      appBar: AppBar(
-        centerTitle: true,
-        backgroundColor: Colors.white,
-        title: Text(
-          'Shopping List',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
       body: PageView(
         controller: _pageController,
         children: _screens,

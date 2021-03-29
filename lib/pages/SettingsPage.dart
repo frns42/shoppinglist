@@ -5,6 +5,14 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepOrange,
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        title: Text(
+          'Shopping List',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
       body: Column(
         children: [
           personalDataTextBox,
@@ -66,6 +74,7 @@ Widget personalDataTextBox = Container(
             filled: true,
             fillColor: Colors.white),
       ),
+
     ],
   ),
 );
@@ -78,19 +87,36 @@ class SettingsButtons extends StatelessWidget {
         Container(
           width: 250,
           height: 40,
-          margin: EdgeInsets.all(10.0),
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 onPrimary: Colors.black,
                 textStyle:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
               //save information
             },
             child: Text('Save'),
+          ),
+        ),
+        Container(
+          width: 250,
+          height: 40,
+          margin: EdgeInsets.all(10.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                textStyle:
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(30.0))),
+            onPressed: () {
+              //Cancel changes
+            },
+            child: Text('Cancel'),
           ),
         ),
         Container(
@@ -107,7 +133,7 @@ class SettingsButtons extends StatelessWidget {
             onPressed: () {
               //Cancel changes
             },
-            child: Text('Cancel'),
+            child: Text('Logout'),
           ),
         ),
       ],

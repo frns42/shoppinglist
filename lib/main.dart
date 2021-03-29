@@ -72,7 +72,7 @@ class ApplicationState with ChangeNotifier {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: this.email,
-        password: this.pwd1ForSignup,
+        password: this.password,
       );
       onSuccess();
     } on FirebaseAuthException catch (e) {
@@ -110,6 +110,7 @@ class ShoppingList extends StatelessWidget {
   Widget build(BuildContext context) {
     print("In ShoppingList build method");
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => InitialScreen(),

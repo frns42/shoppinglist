@@ -9,67 +9,83 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.deepOrange,
-      body: Container(
-        padding: EdgeInsets.only(top: 100.0),
-        child: Column(
-          children: [
-            Text(
+      body: ListView(
+        padding: EdgeInsets.only(top: 70.0),
+        children: [
+          Center(
+            child: Text(
               'Create an account!',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 27.0,
                   color: Colors.white),
             ),
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => SignupFields(appState),
+          ),
+          Consumer<ApplicationState>(
+            builder: (context, appState, _) => SignupFields(appState),
+          ),
+          Container(
+              margin: EdgeInsets.only(left: 100, right: 100, bottom: 5),
+              child: Consumer<ApplicationState>(
+                builder: (context, appState, _) => ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: Size(250, 40),
+                      primary: Colors.white,
+                      onPrimary: Colors.black,
+                      textStyle: TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 15.0),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0))),
+                  onPressed: () {
+                    appState.registerAccount(() {
+                      Navigator.pushNamed(context, '/home');
+                    }, (e) {
+                      helper.showErrorDialog(
+                          context, "Error creating new user", e);
+                    });
+                  },
+                  child: Text('Create account'),
+                ),
+              )),
+          Container(
+            margin: EdgeInsets.only(left: 100, right: 100, bottom: 5),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  minimumSize: Size(250, 40),
+                  primary: Colors.white,
+                  onPrimary: Colors.black,
+                  textStyle:
+                      TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0))),
+              onPressed: () {
+                Navigator.pushNamed(context, '/');
+              },
+              child: Text('Login'),
             ),
-            Container(
-                width: 250,
-                height: 40,
-                margin: EdgeInsets.all(10.0),
-                child: Consumer<ApplicationState>(
-                  builder: (context, appState, _) => ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.white,
-                        onPrimary: Colors.black,
-                        textStyle: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 15.0),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0))),
-                    onPressed: () {
-                      appState.registerAccount(() {Navigator.pushNamed(context, '/home');}, (e) {helper.showErrorDialog(context, "Error creating new user", e);});
-                    },
-                    child: Text('Create account'),
-                  ),
-                )),
-            Container(
-              width: 250,
-              height: 40,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    onPrimary: Colors.black,
-                    textStyle:
-                        TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0))),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                child: Text('Login'),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 }
 
-class SignupFields extends StatelessWidget {
+class SignupFields extends StatefulWidget {
   ApplicationState appState;
 
   SignupFields(this.appState);
+
+  @override
+  _SignupFieldsState createState() => _SignupFieldsState(appState);
+}
+
+class _SignupFieldsState extends State<SignupFields> {
+  bool _isObscure = true;
+  ApplicationState appState;
+
+  _SignupFieldsState(ApplicationState appState) {
+    this.appState = appState;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +103,7 @@ class SignupFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.person),
-                hintText: 'Enter first name',
+                hintText: 'First name',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (firstName) {
@@ -108,7 +124,7 @@ class SignupFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.person),
-                hintText: 'Enter last name',
+                hintText: 'Last name',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (lastName) {
@@ -129,7 +145,7 @@ class SignupFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.mail),
-                hintText: 'Enter e-mail here',
+                hintText: 'E-mail',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (email) {
@@ -150,7 +166,7 @@ class SignupFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.lock),
-                hintText: 'Enter password here',
+                hintText: 'Password',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (firstPwdForSignUp) {
@@ -163,6 +179,7 @@ class SignupFields extends StatelessWidget {
             ),
           ),
           TextField(
+            obscureText: _isObscure,
             decoration: InputDecoration(
                 enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.transparent),
@@ -171,7 +188,16 @@ class SignupFields extends StatelessWidget {
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.all(Radius.circular(30))),
                 prefixIcon: Icon(Icons.lock),
-                hintText: 'Confirm password',
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _isObscure ? Icons.visibility : Icons.visibility_off),
+                  onPressed: () {
+                    setState(() {
+                      _isObscure = !_isObscure;
+                    });
+                  },
+                ),
+                hintText: 'Confirm Password',
                 filled: true,
                 fillColor: Colors.white),
             onChanged: (secondPwdForSignUp) {
