@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:provider/provider.dart';
 import 'package:shopping_list/pages/ListPage.dart';
 import 'package:shopping_list/pages/SettingsPage.dart';
 import 'package:shopping_list/pages/AddListPage.dart';
+
+import 'main.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -11,7 +14,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   PageController _pageController = PageController();
-  List<Widget> _screens = [ListPage(), AddListPage(), SettingsPage()];
+  List<Widget> _screens = [
+  Consumer<ApplicationState>(builder: (context, appState, _) => ListPage(appState)),
+    Consumer<ApplicationState>(builder: (context, appState, _) => AddListPage(appState)),
+    SettingsPage()
+  ];
 
   void _onItemTapped(int selectedIndex) {
     _pageController.jumpToPage(selectedIndex);

@@ -103,6 +103,10 @@ class ApplicationState with ChangeNotifier {
   void setLastName(String lastName) {
     this.lastName = lastName;
   }
+
+  getUserId() {
+    return FirebaseAuth.instance.currentUser.uid;
+  }
 }
 
 class ShoppingList extends StatelessWidget {

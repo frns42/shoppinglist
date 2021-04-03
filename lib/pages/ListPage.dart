@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shopping_list/main.dart';
 import 'EditList.dart'; // new
 
 class ListPage extends StatefulWidget {
+  ApplicationState appState;
+  ListPage(this.appState);
+
   @override
-  _ListPageState createState() => _ListPageState();
+  _ListPageState createState() => _ListPageState(this.appState);
 }
 
 class _ListPageState extends State<ListPage> {
@@ -14,6 +18,9 @@ class _ListPageState extends State<ListPage> {
   final border = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10.0),
   );
+
+  ApplicationState appState;
+  _ListPageState(this.appState);
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +35,7 @@ class _ListPageState extends State<ListPage> {
           ),
         ),
         body: StreamBuilder(
-            stream: ref.snapshots(),
+            stream: ref.where('userId', isEqualTo: appState.getUserId()).snapshots(),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

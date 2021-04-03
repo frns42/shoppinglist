@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shopping_list/main.dart';
 
 class AddListPage extends StatefulWidget {
+
+  ApplicationState appState;
+  AddListPage(this.appState);
+
   @override
-  _AddListPageState createState() => _AddListPageState();
+  _AddListPageState createState() => _AddListPageState(appState);
 }
 
 class _AddListPageState extends State<AddListPage> {
@@ -11,6 +16,11 @@ class _AddListPageState extends State<AddListPage> {
   TextEditingController content = TextEditingController();
 
   CollectionReference ref = FirebaseFirestore.instance.collection('notes');
+
+  ApplicationState appState;
+  _AddListPageState(ApplicationState appState) {
+    this.appState = appState;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,6 +37,7 @@ class _AddListPageState extends State<AddListPage> {
           FlatButton(
             onPressed: () {
               ref.add({
+                'userId': appState.getUserId(),
                 'title': title.text,
                 'content': content.text
               }).whenComplete(() => Navigator.pop(context));
