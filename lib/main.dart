@@ -9,7 +9,10 @@ import 'package:firebase_auth/firebase_auth.dart'; // new
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shopping_list/pages/ListPage.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(ChangeNotifierProvider(
     create: (context) => ApplicationState(),
     lazy: false,
@@ -43,9 +46,8 @@ class ApplicationState with ChangeNotifier {
   }
 
 
+
   Future<void> init() async {
-    await Firebase.initializeApp();
-    print('after firebase initialize');
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
