@@ -2,9 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_list/main.dart';
-import 'package:shopping_list/helper.dart';
+import 'package:shopping_list/Helper.dart';
 
-class InitialScreen extends StatelessWidget {
+class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -114,6 +114,9 @@ class InitialButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    appState.registerIfLoggedInAction(() => Navigator.pushNamed(context, '/home'));
+    appState.registerIfLoggedOutAction(() => Navigator.pushNamed(context, '/'));
     return Column(
       children: [
         Container(
@@ -130,7 +133,7 @@ class InitialButtons extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
               appState.signIn(() => Navigator.pushNamed(context, '/home'),
-                  (e) => helper.showErrorDialog(context, 'Could not login', e));
+                  (e) => Helper.showErrorDialog(context, 'Could not login', e));
             },
             child: Text('Login'),
           ),

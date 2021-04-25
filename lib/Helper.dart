@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class helper {
+class Helper {
 
   static void showErrorDialog(BuildContext context, String title, Exception e) {
     showDialog<void>(

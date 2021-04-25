@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+
 class SettingsPage extends StatelessWidget {
+  ApplicationState appState;
+
+  SettingsPage(this.appState);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,72 +20,81 @@ class SettingsPage extends StatelessWidget {
         ),
       ),
       body: Column(
+        children: [PersonalDataTextBox(appState), SettingsButtons(appState)],
+      ),
+    );
+  }
+}
+
+class PersonalDataTextBox extends StatelessWidget {
+  ApplicationState appState;
+
+  PersonalDataTextBox(this.appState);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(32.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          personalDataTextBox,
-          SettingsButtons(),
+          TextField(
+            decoration: InputDecoration(
+              disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.transparent),
+                  borderRadius: BorderRadius.all(Radius.circular(30))),
+              prefixIcon: Icon(Icons.person),
+              filled: true,
+              fillColor: Colors.white,
+              labelText: appState.email,
+            ),
+            enabled: false,
+          ),
+          Container(
+            child: Text(
+              '',
+            ),
+          ),
+          TextField(
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                prefixIcon: Icon(Icons.add),
+                filled: true,
+                fillColor: Colors.white),
+          ),
+          Container(
+            child: Text(
+              '',
+            ),
+          ),
+          TextField(
+            decoration: InputDecoration(
+                enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.transparent),
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.blue),
+                    borderRadius: BorderRadius.all(Radius.circular(30))),
+                prefixIcon: Icon(Icons.mail),
+                filled: true,
+                fillColor: Colors.white),
+          ),
         ],
       ),
     );
   }
 }
 
-Widget personalDataTextBox = Container(
-  padding: const EdgeInsets.all(32.0),
-  child: Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      TextField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.deepOrange),
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            prefixIcon: Icon(Icons.person),
-            filled: true,
-            fillColor: Colors.white),
-      ),
-      Container(
-        child: Text(
-          '',
-        ),
-      ),
-      TextField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue),
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            prefixIcon: Icon(Icons.add),
-            filled: true,
-            fillColor: Colors.white),
-      ),
-      Container(
-        child: Text(
-          '',
-        ),
-      ),
-      TextField(
-        decoration: InputDecoration(
-            enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.transparent),
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue),
-                borderRadius: BorderRadius.all(Radius.circular(30))),
-            prefixIcon: Icon(Icons.mail),
-            filled: true,
-            fillColor: Colors.white),
-      ),
-
-    ],
-  ),
-);
-
 class SettingsButtons extends StatelessWidget {
+  ApplicationState appState;
+
+  SettingsButtons(this.appState);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -127,11 +142,11 @@ class SettingsButtons extends StatelessWidget {
                 primary: Colors.white,
                 onPrimary: Colors.black,
                 textStyle:
-                TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
+                    TextStyle(fontWeight: FontWeight.bold, fontSize: 15.0),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0))),
             onPressed: () {
-              //Cancel changes
+              appState.logout();
             },
             child: Text('Logout'),
           ),

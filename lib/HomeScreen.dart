@@ -17,7 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _screens = [
   Consumer<ApplicationState>(builder: (context, appState, _) => ListPage(appState)),
     Consumer<ApplicationState>(builder: (context, appState, _) => AddListPage(appState)),
-    SettingsPage()
+    Consumer<ApplicationState>(builder: (context, appState, _) => SettingsPage(appState)),
   ];
 
   void _onItemTapped(int selectedIndex) {

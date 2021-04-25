@@ -7,13 +7,17 @@ import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart'; // new
 import 'package:firebase_auth/firebase_auth.dart'; // new
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:shopping_list/pages/ListPage.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
     create: (context) => ApplicationState(),
     lazy: false,
-    child: ShoppingList(),
-  ));
+    child:
+    Consumer<ApplicationState>(
+        builder: (context, appState, _) => ShoppingList(appState)),
+  ),
+  );
 }
 
 class ApplicationState with ChangeNotifier {
@@ -29,11 +33,14 @@ class ApplicationState with ChangeNotifier {
 
   String pwd2ForSignup;
 
+  Future<Object> Function() loggedInAction;
+
+  Future<Object> Function() loggedOutAction;
+
   ApplicationState() {
     print('In ApplicationState Constructor!');
     init();
   }
-
 
 
   Future<void> init() async {
@@ -42,15 +49,19 @@ class ApplicationState with ChangeNotifier {
 
     FirebaseAuth.instance.userChanges().listen((user) {
       if (user != null) {
+        loggedInAction();
         print('We are logged in and have a user have a user: ' + user.email);
+        this.email = user.email;
       }
-
+      else{
+        loggedOutAction();
+      }
     });
   }
 
-  void registerAccount(void Function() onSuccess, void Function(Exception e) errorCallback,) async {
-
-    if (pwd1ForSignup != pwd2ForSignup){
+  void registerAccount(void Function() onSuccess,
+      void Function(Exception e) errorCallback,) async {
+    if (pwd1ForSignup != pwd2ForSignup) {
       print(pwd1ForSignup);
       print(pwd2ForSignup);
       errorCallback(new Exception("Passwords not matching"));
@@ -59,7 +70,8 @@ class ApplicationState with ChangeNotifier {
 
     try {
       var credential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: pwd1ForSignup);
+          .createUserWithEmailAndPassword(
+          email: email, password: pwd1ForSignup);
       displayName = firstName + ' ' + lastName;
       password = pwd1ForSignup;
       await credential.user.updateProfile(displayName: displayName);
@@ -68,7 +80,8 @@ class ApplicationState with ChangeNotifier {
     }
   }
 
-  void signIn(void Function() onSuccess, void Function(Exception e) errorCallback,) async {
+  void signIn(void Function() onSuccess,
+      void Function(Exception e) errorCallback,) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: this.email,
@@ -99,7 +112,7 @@ class ApplicationState with ChangeNotifier {
   void setFirstName(String firstName) {
     this.firstName = firstName;
   }
-  
+
   void setLastName(String lastName) {
     this.lastName = lastName;
   }
@@ -107,20 +120,38 @@ class ApplicationState with ChangeNotifier {
   getUserId() {
     return FirebaseAuth.instance.currentUser.uid;
   }
+
+  void registerIfLoggedInAction(Future<Object> Function() loggedInAction) {
+    this.loggedInAction = loggedInAction;
+  }
+
+  void logout() {
+    FirebaseAuth.instance.signOut();
+  }
+
+  void registerIfLoggedOutAction(Future<Object> Function() loggedOutAction) {
+    this.loggedOutAction = loggedOutAction;
+  }
 }
 
+
 class ShoppingList extends StatelessWidget {
+  ApplicationState appState;
+
+  ShoppingList(this.appState);
+
+
   @override
   Widget build(BuildContext context) {
     print("In ShoppingList build method");
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => InitialScreen(),
-        '/home': (context) => HomeScreen(),
-        '/sign-up': (context) => SignUpScreen(),
-      },
-    );
+      return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        routes: {
+          '/': (context) => LoginScreen(),
+          '/home': (context) => HomeScreen(),
+          '/sign-up': (context) => SignUpScreen(),
+        },
+      );
   }
 }
